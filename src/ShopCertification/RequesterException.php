@@ -2,4 +2,6 @@
 
 namespace Heureka\ShopCertification;
 
-class RequesterException extends Exception {}
+class RequesterException extends \Exception
+{
+}

@@ -9,8 +9,8 @@ use Heureka\ShopCertification;
  */
 class ApiEndpoint
 {
-
     const API_ENDPOINT_CZ = 'https://api.heureka.cz/shop-certification/v2/';
+
     const API_ENDPOINT_SK = 'https://api.heureka.sk/shop-certification/v2/';
 
     private static $knownServices = [
@@ -28,7 +28,7 @@ class ApiEndpoint
      *
      * @throws UnknownServiceException
      */
-    public function __construct($service)
+    public function __construct(array $service)
     {
         if (!in_array($service, self::$knownServices)) {
             throw new UnknownServiceException();
@@ -40,15 +40,17 @@ class ApiEndpoint
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         if ($this->service === ShopCertification::HEUREKA_CZ) {
             return self::API_ENDPOINT_CZ;
         }
 
-        return $endpoint = self::API_ENDPOINT_SK;
+        return self::API_ENDPOINT_SK;
     }
 
 }
 
-class UnknownServiceException extends Exception {}
+class UnknownServiceException extends \Exception
+{
+}

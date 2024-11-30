@@ -8,7 +8,6 @@ namespace Heureka\ShopCertification;
  */
 interface IRequester
 {
-
     const ACTION_LOG_ORDER = 'order/log';
 
     /**
@@ -24,6 +23,6 @@ interface IRequester
      * @return Response
      * @throws RequesterException A RequesterException must be thrown if response is invalid or has code other than 200
      */
-    public function request($action, array $getData = [], array $postData = []);
+    public function request(string $action, array $getData = [], array $postData = []);
 
 }

@@ -14,7 +14,6 @@ use Heureka\ShopCertification\Response;
  */
 class ShopCertification
 {
-
     const HEUREKA_CZ = 0;
     const HEUREKA_SK = 1;
 
@@ -60,7 +59,7 @@ class ShopCertification
      * @param array           $options
      * @param IRequester|null $requester
      */
-    public function __construct($apiKey, array $options = [], IRequester $requester = null)
+    public function __construct(string $apiKey, array $options = [], IRequester $requester = null)
     {
         $this->apiKey = $apiKey;
 
@@ -69,6 +68,7 @@ class ShopCertification
         ];
 
         $this->options = array_merge($defaultOptions, $options);
+
         $apiEndpoint = new ApiEndpoint($this->options['service']);
 
         if ($requester === null) {
@@ -89,7 +89,7 @@ class ShopCertification
      *
      * @return self
      */
-    public function setEmail($email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -102,7 +102,7 @@ class ShopCertification
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setOrderId($orderId)
+    public function setOrderId(string $orderId): self
     {
         if (strlen($orderId) > 255) {
             throw new InvalidArgumentException(
@@ -121,10 +121,8 @@ class ShopCertification
      * @return ShopCertification
      * @throws DuplicateProductItemIdException
      */
-    public function addProductItemId($productItemId)
+    public function addProductItemId(string $productItemId): self
     {
-        $productItemId = (string)$productItemId;
-
         if (array_search($productItemId, $this->productItemIds) !== false) {
             throw new DuplicateProductItemIdException(
                 sprintf('The productItemId "%s" was already added. Please check the implementation.', $productItemId)
@@ -143,7 +141,7 @@ class ShopCertification
      *
      * @throws ShopCertification\Exception
      */
-    public function logOrder()
+    public function logOrder(): Response
     {
         if ($this->orderSent) {
             throw new ShopCertification\Exception('You already sent one order. Please check your implementation.');
@@ -170,5 +168,4 @@ class ShopCertification
 
         return $result;
     }
-
 }

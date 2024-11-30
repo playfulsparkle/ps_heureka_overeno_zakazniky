@@ -18,7 +18,7 @@ class ShopCertificationTest extends \PHPUnit\Framework\TestCase
         Mockery::close();
     }
 
-    public function testLogSetOrderWithInvalidOrderId()
+    public function testLogSetOrderWithInvalidOrderId(): void
     {
         $requester = Mockery::mock('\Heureka\ShopCertification\IRequester');
         $requester->shouldReceive('setApiEndpoint')
@@ -31,7 +31,7 @@ class ShopCertificationTest extends \PHPUnit\Framework\TestCase
         $shopCertification->setOrderId(str_repeat('x', 256));
     }
 
-    public function testLogOrderSuccess()
+    public function testLogOrderSuccess(): void
     {
         $requester = Mockery::mock('\Heureka\ShopCertification\IRequester');
         $requester->shouldReceive('setApiEndpoint')
@@ -43,9 +43,9 @@ class ShopCertificationTest extends \PHPUnit\Framework\TestCase
         $response->message = 'ok';
 
         $postData = [
-            'apiKey'         => $apiKey = 'xxxxxxxxxx',
-            'email'          => $email = 'john@doe.com',
-            'orderId'        => $orderId = 12345,
+            'apiKey' => $apiKey = 'xxxxxxxxxx',
+            'email' => $email = 'john@doe.com',
+            'orderId' => $orderId = 12345,
             'productItemIds' => [
                 $product1 = 'ab12345',
                 $product2 = '123459',
@@ -67,7 +67,7 @@ class ShopCertificationTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('\Heureka\ShopCertification\Response', $result);
     }
 
-    public function testLogOrderSuccessWithoutOptionalFields()
+    public function testLogOrderSuccessWithoutOptionalFields(): void
     {
         $requester = Mockery::mock('\Heureka\ShopCertification\IRequester');
         $requester->shouldReceive('setApiEndpoint')
@@ -79,8 +79,8 @@ class ShopCertificationTest extends \PHPUnit\Framework\TestCase
         $response->message = 'ok';
 
         $postData = [
-            'apiKey'         => $apiKey = 'xxxxxxxxxx',
-            'email'          => $email = 'john@doe.com',
+            'apiKey' => $apiKey = 'xxxxxxxxxx',
+            'email' => $email = 'john@doe.com',
         ];
 
         $requester->shouldReceive('request')
@@ -95,7 +95,7 @@ class ShopCertificationTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf('\Heureka\ShopCertification\Response', $result);
     }
 
-    public function testLogOrderMissingEmail()
+    public function testLogOrderMissingEmail(): void
     {
         $requester = Mockery::mock('\Heureka\ShopCertification\IRequester');
         $requester->shouldReceive('setApiEndpoint')
@@ -108,7 +108,7 @@ class ShopCertificationTest extends \PHPUnit\Framework\TestCase
         $shopCertification->logOrder();
     }
 
-    public function testLogOrderDoubleSend()
+    public function testLogOrderDoubleSend(): void
     {
         $requester = Mockery::mock('\Heureka\ShopCertification\IRequester');
         $requester->shouldReceive('setApiEndpoint')
@@ -120,8 +120,8 @@ class ShopCertificationTest extends \PHPUnit\Framework\TestCase
         $response->message = 'ok';
 
         $postData = [
-            'apiKey'         => $apiKey = 'xxxxxxxxxx',
-            'email'          => $email = 'john@doe.com',
+            'apiKey' => $apiKey = 'xxxxxxxxxx',
+            'email' => $email = 'john@doe.com',
             'productItemIds' => [
                 $product1 = 'ab12345',
                 $product2 = '123459',
@@ -140,6 +140,7 @@ class ShopCertificationTest extends \PHPUnit\Framework\TestCase
         $shopCertification->logOrder();
 
         $this->expectException('\Heureka\ShopCertification\Exception');
+
         $shopCertification->logOrder();
     }
 

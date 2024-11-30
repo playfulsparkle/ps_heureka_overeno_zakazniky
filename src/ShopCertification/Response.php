@@ -7,23 +7,30 @@ namespace Heureka\ShopCertification;
  */
 class Response
 {
-
     /**
+     * Response code.
+     * 
      * @var int
      */
     public $code;
 
     /**
+     * Response message.
+     * 
      * @var string
      */
     public $message;
 
     /**
+     * Response description.
+     * 
      * @var string|null
      */
     public $description;
 
     /**
+     * Response resource ID.
+     * 
      * @var string|null
      */
     public $resourceId;
@@ -34,9 +41,10 @@ class Response
      * @throws JsonException
      * @throws InvalidResponseException
      */
-    public function __construct($json)
+    public function __construct(string $json)
     {
         $response = json_decode($json);
+
         if (($response instanceof \stdClass) === false) {
             throw new JsonException(sprintf(
                 'Unexpected response "%s" returned. JSON error: [%d] %s',
@@ -57,5 +65,10 @@ class Response
 
 }
 
-class JsonException extends Exception {}
-class InvalidResponseException extends Exception {}
+class JsonException extends \Exception
+{
+}
+
+class InvalidResponseException extends \Exception
+{
+}

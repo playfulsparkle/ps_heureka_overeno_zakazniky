@@ -14,16 +14,17 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
      * @param string $json
      * @param array  $expected
      */
-    public function testConstruct($json, $expected)
+    public function testConstruct($json, $expected): void
     {
         $response = new Response($json);
-        $this->assertSame($expected, (array)$response);
+
+        $this->assertSame($expected, (array) $response);
     }
 
     /**
      * @return array
      */
-    public function providerConstruct()
+    public function providerConstruct(): array
     {
         return [
             [
@@ -32,18 +33,20 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
             ],
             [
                 '{"code":404,"message":"not-found","description":"Resource does not exist.","resourceId":"sf812as12"}',
-                ['code'        => 404,
-                 'message'     => 'not-found',
-                 'description' => 'Resource does not exist.',
-                 'resourceId'  => 'sf812as12',
+                [
+                    'code' => 404,
+                    'message' => 'not-found',
+                    'description' => 'Resource does not exist.',
+                    'resourceId' => 'sf812as12',
                 ],
             ],
         ];
     }
 
-    public function testConstructWithMissingFields()
+    public function testConstructWithMissingFields(): void
     {
         $this->expectException('Heureka\ShopCertification\InvalidResponseException');
+
         new Response('{"message":"There was an error"}');
     }
 
@@ -52,19 +55,28 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
      *
      * @param string $json
      */
-    public function testConstructWithInvalidJsonResponse($json)
+    public function testConstructWithInvalidJsonResponse($json): void
     {
         $this->expectException('Heureka\ShopCertification\JsonException');
+        
         new Response($json);
     }
 
     /**
      * @return array
      */
-    public function providerConstructWithInvalidJsonResponse()
+    public function providerConstructWithInvalidJsonResponse(): array
     {
         return [
-            ['ok'], ['Chyba'], ['{'], ['{ok}'], [null], [true], [false], [0], [1],
+            ['ok'],
+            ['Chyba'],
+            ['{'],
+            ['{ok}'],
+            [null],
+            [true],
+            [false],
+            [0],
+            [1],
         ];
     }
 
