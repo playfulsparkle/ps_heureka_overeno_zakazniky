@@ -44,7 +44,7 @@ $shopCertification->setEmail('jan.novak@muj-eshop.cz');
 Set the customer's order ID (only integers are allowed):
 
 ```php
-$shopCertification->setOrderId(15195618851564);
+$shopCertification->setOrderId('15195618851564');
 ```
 
 Add products which the customer ordered (use IDs which you used in ITEM_ID field of the Heureka XML feed):

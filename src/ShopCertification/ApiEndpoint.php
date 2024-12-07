@@ -28,7 +28,7 @@ class ApiEndpoint
      *
      * @throws UnknownServiceException
      */
-    public function __construct(array $service)
+    public function __construct(int $service)
     {
         if (!in_array($service, self::$knownServices)) {
             throw new UnknownServiceException();

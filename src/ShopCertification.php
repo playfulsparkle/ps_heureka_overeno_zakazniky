@@ -91,8 +91,12 @@ class ShopCertification
      */
     public function setEmail(string $email): self
     {
-        $this->email = $email;
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new InvalidArgumentException('Invalid email format');
+        }
 
+        $this->email = $email;
+        
         return $this;
     }
 

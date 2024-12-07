@@ -62,8 +62,8 @@ class Response
             $this->$key = $value;
         }
     }
-
 }
+
 
 class JsonException extends \Exception
 {

@@ -58,19 +58,24 @@ class PhpRequester implements IRequester
 
             $context = stream_context_create($options);
 
-            $fp = @fopen($this->endpoint->getUrl() . $action . $getParams, 'r', false, $context); // @ intentionally
+            $fp = @fopen($this->endpoint->getUrl() . $action . $getParams, 'r', false, $context);
+            
+            try {
+                if ($fp === false) {
+                    $error = error_get_last();
 
-            if ($fp === false) {
-                $error = error_get_last();
+                    throw new RequesterException(sprintf('fopen failed: [%d] %s', $error['type'], $error['message']));
+                }
 
-                throw new RequesterException(sprintf('fopen failed: [%d] %s', $error['type'], $error['message']));
+                $result = stream_get_contents($fp);
+
+                $metadata = stream_get_meta_data($fp);
+
+            } finally {
+                if ($fp) {
+                    fclose($fp);
+                }
             }
-
-            $result = stream_get_contents($fp);
-
-            $metadata = stream_get_meta_data($fp);
-
-            fclose($fp);
 
             $httpCode = 0;
 
